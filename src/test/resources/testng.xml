@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="TestNG and Spring example">
+    <test name="TestNG and Spring example" parallel="methods" thread-count="3">
+        <classes>
+            <class name="simpletestngspringtests.SearchFeatureTest"/>
+        </classes>
+    </test>
+</suite>
