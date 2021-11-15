@@ -1,43 +1,31 @@
 package com.bwielk.testngspring.testngspring.pages;
 
-import com.bwielk.testngspring.testngspring.browseractions.ClickableActions;
-import com.bwielk.testngspring.testngspring.browseractions.ElementCheckActions;
-import com.bwielk.testngspring.testngspring.content.HomePageContent;
-import com.bwielk.testngspring.testngspring.content.SearchResultPageContent;
-import com.bwielk.testngspring.testngspring.selector.HomePageSelectors;
-import com.bwielk.testngspring.testngspring.selector.SearchPageSelectors;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.codeborne.selenide.Condition;
+import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 
 @Component
+@Scope("prototype")
 public class HomePage extends BasePage {
-
-    @Autowired
-    private SearchResultsPage searchResultsPage;
 
     @Value("${url}")
     private String url;
 
-    public HomePage openHomePage() {
-        webDriverComponent.getDriver().get(url);
-//        WebDriverRunner.getWebDriver().get("https://www.autohero.com/de/");
-//        getDriver().get("https://www.autohero.com/de/");
-        return this;
+    public void openHomePage() {
+        open(url);
+        $("#L2AGLb").click();
+        $(By.name("q")).shouldBe(Condition.visible, Duration.ofSeconds(5));
     }
 
-    public HomePage checkBannerContents() {
-        ElementCheckActions.checkTextDisplayed(HomePageSelectors.BANNER, HomePageContent.BANNER);
-        ElementCheckActions.checkTextDisplayed(HomePageSelectors.SUBBANNER, HomePageContent.SUBBANNER);
-        return this;
+    public void inputSearch(String request) {
+        $(By.name("q")).setValue(request);
     }
-
-    public SearchResultsPage goToSearch() {
-        ClickableActions.clickElement(HomePageSelectors.SEARCH_BUTTON);
-        ElementCheckActions.checkTextDisplayed(SearchPageSelectors.PAGE_TITLE, SearchResultPageContent.SEARCH_RESULTS_PAGE_TITLE);
-        return searchResultsPage;
-    }
-
-
 }

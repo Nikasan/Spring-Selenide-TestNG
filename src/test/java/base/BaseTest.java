@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeSuite;
 import java.lang.reflect.Method;
 
 @SpringBootTest(classes = TestngspringApplication.class)
-public class BaseTestClass extends AbstractTestNGSpringContextTests {
+public class BaseTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private WebDriverComponent webDriverComponent;

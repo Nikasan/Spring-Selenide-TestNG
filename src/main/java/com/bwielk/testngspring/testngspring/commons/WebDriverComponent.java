@@ -14,6 +14,9 @@ public class WebDriverComponent {
     @Value("${browser:chrome}")
     private String browser;
 
+    @Value("${app.message}")
+    private String applicationMessage;
+
     public static ThreadLocal<WebDriver> webdriver = new ThreadLocal<>();
 
     public void launchBrowser(String nameOfTestMethod) {
@@ -32,6 +35,7 @@ public class WebDriverComponent {
         webdriver.set(driver);
         WebDriverRunner.setWebDriver(webdriver.get());
         System.out.println(nameOfTestMethod + " was started");
+        System.out.println(applicationMessage);
     }
 
     public WebDriver getDriver() {

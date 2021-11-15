@@ -1,39 +1,35 @@
 package simpletestngspringtests;
 
-import base.BaseTestClass;
+import base.BaseTest;
 import com.bwielk.testngspring.testngspring.pages.HomePage;
-import com.bwielk.testngspring.testngspring.pages.SearchResultsPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
-
-public class SearchFeatureTest extends BaseTestClass {
+//@SpringBootTest(classes = TestngspringApplication.class) Нужна ли тут аннотация??
+public class SearchFeatureTest extends BaseTest {
 
     @Autowired
     private HomePage homePage;
-    @Autowired
-    private SearchResultsPage searchResultsPage;
 
+    @Autowired
+    private HomePage homePage1;
 
     @Test
-    private void homePagePromoContentIsDisplayedCorrectly() {
-        homePage.openHomePage();
-//        homePage.checkBannerContents();
+    private void homePagePromoContentIsDisplayedCorrectly(){
+      homePage.openHomePage();
+      homePage.inputSearch("TestNG");
     }
 
     @Test
     private void userCanSearchACarByPrice(){
         homePage.openHomePage();
-//        homePage.goToSearch();
-//        searchResultsPage.selectBrand(CarBrands.BMW);
-//        searchResultsPage.selectPriceRange("5000", "16000");
-//        searchResultsPage.selectRegistartionYears("2000", "2020");
+        homePage.inputSearch("TestNG");
 
     }
 
     @Test
     private void homePagePromoContentIsDisplayedCorrectly2() {
         homePage.openHomePage();
-//        homePage.checkBannerContents();
+        homePage.inputSearch("TestNG");
     }
 }

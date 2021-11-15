@@ -6,7 +6,6 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bwielk.testngspring</groupId>
 	<artifactId>testngspring</artifactId>
@@ -21,6 +20,8 @@
 		<selenium.version>4.0.0</selenium.version>
 		<i18n.version>1.29</i18n.version>
 		<selenide.version>6.0.3</selenide.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -63,14 +64,45 @@
 			<artifactId>nv-i18n</artifactId>
 			<version>${i18n.version}</version>
 		</dependency>
-
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>stage</id>
+			<properties>
+				<spring.profiles.active>stage</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M4</version>
+				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
