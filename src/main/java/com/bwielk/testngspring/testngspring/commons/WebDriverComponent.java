@@ -6,21 +6,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 public class WebDriverComponent {
 
-    //TODO config not working
-//    @Value("${browser:chrome}")
-//    private static String browser;
-    private static String browser = "chrome";
+    @Value("${browser:chrome}")
+    private String browser;
 
     public static ThreadLocal<WebDriver> webdriver = new ThreadLocal<>();
 
-    public static void launchBrowser(String nameOfTestMethod) {
+    public void launchBrowser(String nameOfTestMethod) {
         WebDriver driver = null;
         if (browser.equals("chrome")) {
             WebDriverManager.chromedriver().setup();
@@ -38,23 +34,13 @@ public class WebDriverComponent {
         System.out.println(nameOfTestMethod + " was started");
     }
 
-    @Bean
-    @Scope("prototype")
-    public static WebDriver getDriver() {
+    public WebDriver getDriver() {
         return WebDriverRunner.getWebDriver();
     }
 
-//    public static void quitDriver() {
-//        if(webdriver.get() != null){
-//            webdriver.get().quit();
-//            webdriver.set(null);
-//        }
-//    }
-
-    public static void quitDriver() {
+    public void quitDriver() {
         if (WebDriverRunner.getWebDriver() != null) {
             WebDriverRunner.getWebDriver().quit();
         }
     }
-
 }
